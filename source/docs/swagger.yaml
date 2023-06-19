@@ -1,0 +1,150 @@
+definitions:
+  model.Item:
+    properties:
+      created_at:
+        type: integer
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: integer
+    type: object
+  model.Item_Search:
+    properties:
+      search:
+        type: string
+    type: object
+  model.Item_View:
+    properties:
+      created_at:
+        type: integer
+      description:
+        type: string
+      id:
+        type: string
+      name:
+        type: string
+      updated_at:
+        type: integer
+    type: object
+  model.MetadataResponse:
+    properties:
+      message:
+        type: string
+      status:
+        type: boolean
+    type: object
+  model.Response:
+    properties:
+      data: {}
+      metadata:
+        $ref: '#/definitions/model.MetadataResponse'
+    type: object
+info:
+  contact: {}
+paths:
+  /item/add:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: PARAM
+        in: body
+        name: parameter
+        required: true
+        schema:
+          $ref: '#/definitions/model.Item'
+      produces:
+      - application/json
+      responses:
+        "201":
+          description: OK
+          schema:
+            properties:
+              meta_data:
+                $ref: '#/definitions/model.Response'
+            type: object
+      security:
+      - JWT: []
+      tags:
+      - Item
+  /item/get-all:
+    post:
+      consumes:
+      - application/json
+      parameters:
+      - description: PARAM
+        in: body
+        name: parameter
+        required: true
+        schema:
+          $ref: '#/definitions/model.Item_Search'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                items:
+                  $ref: '#/definitions/model.Item_View'
+                type: array
+            type: object
+      security:
+      - JWT: []
+      tags:
+      - Item
+  /item/get-one:
+    get:
+      consumes:
+      - application/json
+      parameters:
+      - description: ID
+        in: query
+        name: id
+        required: true
+        type: string
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              data:
+                $ref: '#/definitions/model.Item'
+            type: object
+      security:
+      - JWT: []
+      tags:
+      - Item
+  /item/update:
+    put:
+      consumes:
+      - application/json
+      parameters:
+      - description: PARAM
+        in: body
+        name: parameter
+        required: true
+        schema:
+          $ref: '#/definitions/model.Item'
+      produces:
+      - application/json
+      responses:
+        "200":
+          description: OK
+          schema:
+            properties:
+              meta_data:
+                $ref: '#/definitions/model.Response'
+            type: object
+      security:
+      - JWT: []
+      tags:
+      - Item
+swagger: "2.0"
